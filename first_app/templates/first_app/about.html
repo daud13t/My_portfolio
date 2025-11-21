@@ -1,0 +1,55 @@
+{% extends "first_app/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+
+
+      .about-text{
+            padding:20px !important;
+            display: inline-block;
+            
+            font-family: "Zen Dots", cursive;
+            font-size: 3.2rem;
+            letter-spacing: 2px;
+            transition: transform 0.3s ease, letter-spacing 0.3s ease;
+      }
+
+      .about-text:hover{
+            transform: scale(1.06);
+            letter-spacing: 3px;
+      }
+
+      .contact-cta{
+            display: inline-block;
+            
+            font-family: "Zen Dots", cursive;
+            letter-spacing: 1.5px;
+            transition: transform 0.3s ease, letter-spacing 0.3s ease;
+      }
+
+      .contact-cta:hover{
+            transform: scale(1.06);
+            letter-spacing: 2.5px;
+      }
+
+
+</style>
+
+      <div class='container extra'>
+      <h1 class="about-text">About me</h1>
+      <p class='extra'>
+              I’m Daud. I’m currently based in pakistan. I’m a web developer who loves working with Django and Python to build projects that actually work and look clean.
+               I started coding out of curiosity, experimenting with small scripts and mini projects, and quickly realized I could turn ideas into full,
+                functional applications on my own. I enjoy figuring out how everything connects behind the scenes, starting from how data moves through the backend,
+                 to how the frontend displays it in a way that’s intuitive for users. Every project I take on is a chance to solve real problems, streamline processes,
+                  and learn new techniques along the way. I focus on writing clean, maintainable code and creating smooth experiences for people using my applications. 
+                  Whether it’s a blog, a tool, or a larger web application, I like building things that not only look good but actually serve a purpose. Coding for me isn’t just about writing lines of code,
+                  it’s about understanding how systems work, experimenting with new ideas, and making something tangible that people can use, explore, and enjoy.
+            <a class="extraaa contact-cta" href="{% url 'contact' %}">contact me!</a></p>
+      </div>
+
+      
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "first_app/base.html" %}
+{% block content %}
+<div style="max-width:720px;margin:40px auto;padding:24px;background:rgba(29,29,29,0.28);backdrop-filter:blur(12px);border-radius:14px;">
+  <h2 style="text-align:center;color:#eae0c9;">Contact Me</h2>
+
+  {% if sent %}
+  <p style="color:#a5f1a5;text-align:center;">Message sent successfully! we’ll reply soon.</p>
+  {% else %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div style="text-align:center;margin-top:10px;">
+      <button type="submit" style="background:#e6d7b1;color:#1a120b;border:none;padding:8px 20px;border-radius:8px;">Send</button>
+    </div>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}
