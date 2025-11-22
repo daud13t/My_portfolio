@@ -5,6 +5,11 @@
   <meta charset="UTF-8" />
   <title>Connect Four</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
 </head>
 
@@ -21,7 +26,7 @@
 html, body { height: 100%; margin: 0; }
 
 body {
-  font-family: "Inter", "Poppins", system-ui, sans-serif;
+  font-family: "Roboto", sans-serif;
   background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
   color: var(--text-white);
   display: flex;
@@ -35,14 +40,45 @@ body {
   text-align: center;
   padding-top: 2.5rem;
   padding-bottom: 1.5rem;
+  position: relative;
+}
+
+.home-btn {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(90, 214, 164, 0.15);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  color: var(--accent);
+  text-decoration: none;
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  display: inline-block;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.home-btn:hover {
+  background: var(--accent);
+  color: var(--bg-1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(90, 214, 164, 0.4);
 }
 
 .site-header h1 {
   margin: 0;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 2rem;
   color: var(--text-white);
-  letter-spacing: 0.5px;
+  letter-spacing: 1.5px;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
 }
 
 .subtext {
@@ -50,12 +86,15 @@ body {
   color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
   letter-spacing: 0.3px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
 }
 
 .turn-msg {
   margin: 0.5rem 0 0;
   color: rgba(255, 255, 255, 0.8);
   font-weight: 400;
+  font-family: "Roboto", sans-serif;
 }
 
 .divider {
@@ -129,6 +168,7 @@ body {
   position: relative;
   display: inline-block;
   padding-bottom: 4px;
+  font-family: "Roboto", sans-serif;
 }
 
 .signature::after {
@@ -154,6 +194,14 @@ body {
   }
   .site-header h1 { font-size: 1.6rem; }
   .subtext, .turn-msg { font-size: 0.9rem; }
+  .home-btn {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-bottom: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
 }
 
 </style>
@@ -163,6 +211,7 @@ body {
 <body>
   <main class="app-shell">
     <header class="site-header text-center">
+      <a href="{% url 'home' %}" class="home-btn">← Portfolio</a>
       <h1>Connect Four</h1>
       <h2 class="muted subtext">Classic: get four in a row</h2>
       <h3 class="turn-msg">Waiting for players…</h3>
