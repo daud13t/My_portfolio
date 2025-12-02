@@ -24,10 +24,12 @@ TEMPLATE_DIR = BASE_DIR/"templates"
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'dauds-portfolio.onrender.com', '*.onrender.com', 'localhost']
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://dauds-portfolio.onrender.com",
+]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
