@@ -35,13 +35,13 @@ def contact_view(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-             print("Form is valid!")  # Debug
+            print("Form is valid!")  # Debug
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
             message = form.cleaned_data["message"]
 
             try:
-                  print("Sending email via Resend...")
+                print("Sending email via Resend...")
                 response = requests.post(
                     "https://api.resend.com/send",
                     headers={"Authorization": f"Bearer {settings.RESEND_API_KEY}"},
