@@ -41,6 +41,7 @@ def contact_view(request):
             message = form.cleaned_data["message"]
 
             try:
+                  print("Sending email via Resend...")
                 response = requests.post(
                     "https://api.resend.com/send",
                     headers={"Authorization": f"Bearer {settings.RESEND_API_KEY}"},
