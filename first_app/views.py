@@ -3,8 +3,14 @@ from django.views import generic
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
+import os
+import resend
 
 # Create your views here.
+
+
+resend.api_key = os.environ.get("RESEND_API_KEY")
+
 
 class Home(generic.TemplateView):
       template_name = 'first_app/home.html'
@@ -23,27 +29,33 @@ class sign_in_for_project1(generic.TemplateView):
 
 
 
+
 def contact_view(request):
     sent = False
+
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data["name"]
-            email = form.cleaned_data["email"]
-            message = form.cleaned_data["message"]
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
 
-            full_message = f"From: {name} <{email}>\n\nMessage:\n{message}"
+            try:
+                resend.Emails.send({
+                    "from": os.environ.get("FROM_EMAIL"),
+                    "to": os.environ.get("TO_EMAIL"),
+                    "subject": f"Portfolio Contact From {name}",
+                    "html": f"""
+                        <p><strong>Name:</strong> {name}</p>
+                        <p><strong>Email:</strong> {email}</p>
+                        <p><strong>Message:</strong><br>{message}</p>
+                    """
+                })
+                sent = True
 
-          
-            send_mail(
-                subject=f"Portfolio Contact from {name}",
-                message=full_message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=["daud13t@gmail.com"], 
-                fail_silently=False,
-            )
+            except Exception as e:
+                print("Resend ERROR:", e)
 
-            sent = True
     else:
         form = ContactForm()
 
