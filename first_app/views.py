@@ -5,7 +5,7 @@ from django.conf import settings
 from .forms import ContactForm
 import os
 import resend
-
+import requests
 # Create your views here.
 
 
@@ -32,31 +32,30 @@ class sign_in_for_project1(generic.TemplateView):
 
 def contact_view(request):
     sent = False
-
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data['message']
+            name = form.cleaned_data["name"]
+            email = form.cleaned_data["email"]
+            message = form.cleaned_data["message"]
 
             try:
-                resend.Emails.send({
-                    "from": os.environ.get("FROM_EMAIL"),
-                    "to": os.environ.get("TO_EMAIL"),
-                    "subject": f"Portfolio Contact From {name}",
-                    "html": f"""
-                        <p><strong>Name:</strong> {name}</p>
-                        <p><strong>Email:</strong> {email}</p>
-                        <p><strong>Message:</strong><br>{message}</p>
-                    """
-                })
+                response = requests.post(
+                    "https://api.resend.com/send",
+                    headers={"Authorization": f"Bearer {settings.RESEND_API_KEY}"},
+                    json={
+                        "from": "daud13t@gmail.com",
+                        "to": ["daud13t@gmail.com"],
+                        "subject": f"Portfolio Contact from {name}",
+                        "text": message,
+                    },
+                    timeout=10
+                )
+                response.raise_for_status()
                 sent = True
-
             except Exception as e:
-                print("Resend ERROR:", e)
-
+                print("Resend error:", e)
+                sent = False
     else:
         form = ContactForm()
-
     return render(request, "first_app/contact.html", {"form": form, "sent": sent})
