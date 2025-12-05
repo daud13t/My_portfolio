@@ -27,20 +27,37 @@ class project2(generic.TemplateView):
 class sign_in_for_project1(generic.TemplateView):
       template_name = "project1/sign_in.html"
 
+
+
+
 def contact_view(request):
+    sent = False
     if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            print("Form is valid!")  # Debug
+            name = form.cleaned_data["name"]
+            email = form.cleaned_data["email"]
+            message = form.cleaned_data["message"]
 
-        send_mail(
-            subject=f"Portfolio Contact from {name}",
-            message=f"Message from {email}:\n\n{message}",
-            from_email=None,
-            recipient_list=["daud13t@gmail.com"],
-            fail_silently=False,
-        )
-
-        return render(request, "first_app/contact.html", {"success": True})
-
-    return render(request, "first_app/contact.html")
+            try:
+                print("Sending email via Resend...")
+                response = requests.post(
+                    "https://api.resend.com/send",
+                    headers={"Authorization": f"Bearer {settings.RESEND_API_KEY}"},
+                    json={
+                        "from": "onboarding@resend.dev",
+                        "to": ["daud13t@gmail.com"],
+                        "subject": f"Portfolio Contact from {name}",
+                        "text": message,
+                    },
+                    timeout=10
+                )
+                response.raise_for_status()
+                sent = True
+            except Exception as e:
+                print("Resend error:", e)
+                sent = False
+    else:
+        form = ContactForm()
+    return render(request, "first_app/contact.html", {"form": form, "sent": sent})
