@@ -27,10 +27,6 @@ class project2(generic.TemplateView):
 class sign_in_for_project1(generic.TemplateView):
       template_name = "project1/sign_in.html"
 
-
-from django.core.mail import send_mail
-from django.shortcuts import render
-
 def contact_view(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -45,6 +41,6 @@ def contact_view(request):
             fail_silently=False,
         )
 
-        return render(request, "contact.html", {"success": True})
+        return render(request, "first_app/contact.html", {"success": True})
 
-    return render(request, "contact.html")
+    return render(request, "first_app/contact.html")
