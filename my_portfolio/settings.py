@@ -36,6 +36,15 @@ CSRF_TRUSTED_ORIGINS = [
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "daud13t@gmail.com")
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 CONTACT_RECIPIENT = os.environ.get("CONTACT_RECIPIENT", "daud13t@gmail.com")
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.resend.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get("RESEND_API_KEY")
+EMAIL_HOST_PASSWORD = os.environ.get("RESEND_API_KEY")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
 # Application definition
 
 INSTALLED_APPS = [
