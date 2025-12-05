@@ -32,6 +32,7 @@ class sign_in_for_project1(generic.TemplateView):
 
 def contact_view(request):
     sent = False
+    error_message = None
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -42,14 +43,18 @@ def contact_view(request):
 
             try:
                 print("Sending email via Resend...")
+                # Ensure we have an API key before trying strictly
+                if not settings.RESEND_API_KEY:
+                    raise Exception("RESEND_API_KEY is not set.")
+
                 response = requests.post(
                     "https://api.resend.com/send",
                     headers={"Authorization": f"Bearer {settings.RESEND_API_KEY}"},
                     json={
                         "from": "onboarding@resend.dev",
-                        "to": ["daud13t@gmail.com"],
+                        "to": [settings.CONTACT_RECIPIENT],
                         "subject": f"Portfolio Contact from {name}",
-                        "text": message,
+                        "text": f"From: {name} <{email}>\n\n{message}",
                     },
                     timeout=10
                 )
@@ -58,6 +63,7 @@ def contact_view(request):
             except Exception as e:
                 print("Resend error:", e)
                 sent = False
+                error_message = f"Failed to send email: {str(e)}"
     else:
         form = ContactForm()
-    return render(request, "first_app/contact.html", {"form": form, "sent": sent})
+    return render(request, "first_app/contact.html", {"form": form, "sent": sent, "error_message": error_message})
