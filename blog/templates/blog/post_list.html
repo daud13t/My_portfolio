@@ -1,0 +1,27 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<div class="centerstage">
+
+      {% for post in post_list %}
+      <div class="post">
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h1>
+            <h3>-</h2>
+
+      </div>
+      {% endfor %}
+
+      <div style="position: fixed; right: 20px;transform: translateY(50%);
+      background-color: #79c3ff; border-radius: 10px; padding: 15px; width: 250px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); font-size: 14px;">
+
+  <h5 style="margin-top: 0;">About Us</h5>
+  <p style="margin-bottom: 0;">
+    Welcome to our blog! We share posts, ideas, and stories about coding,
+    creativity, and learning. <b><a class="nav-link" href="https://www.linkedin.com/in/daud-altaf-71b20a39b">LinkedIn</a><a class="nav-link" href="https://github.com/daud13t">GitHub</a>
+  </p>
+
+</div>
+</div>
+
+{% endblock%}

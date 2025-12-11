@@ -1,0 +1,413 @@
+{% extends "first_app/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  body {
+    background: radial-gradient(circle at top left, #000000 25%, #141418 67%, #2c2929 100%);
+    background-color: #121216;
+    color: rgba(234, 223, 205, 1);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      background-attachment: scroll;
+      min-height: 100%;
+      background-position: center top;
+      background-size: 100% 100%;
+    }
+  }
+
+  .font_d {
+    padding-top: 30px;
+    margin-bottom: 2%;
+    font-family: "Zen Dots";
+    font-size: 7rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-align: center;
+    color: rgba(234, 223, 205, 1);
+  }
+
+  .paragraphs {
+    font-size: 1.2rem;
+    font-weight: 450;
+    font-family: "Space Grotesk", sans-serif;
+    justify-content: center;
+  }
+
+  .font_d_for_h2 {
+    font-family: "Zen Dots";
+    font-size: 3rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-align: center;
+    color: rgba(234, 223, 205, 1);
+  }
+
+  .glass-box {
+    width: 65%;
+    margin: 40px auto 15px auto;
+    padding: 32px 30px;
+    border-radius: 0;
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: none;
+    text-align: left;
+  }
+
+  .glass-box h4 {
+    margin-bottom: 25px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgba(234, 223, 205, 0.9);
+  }
+
+  .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 6px;
+    justify-content: flex-start;
+  }
+
+  .skill {
+    padding: 6px 15px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(234, 223, 205, 1);
+    font-size: 0.85rem;
+    letter-spacing: 0.4px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .skill:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .glass-box:hover {
+    background: transparent;
+  }
+
+  @media (max-width: 992px) {
+    .glass-box {
+      width: 80%;
+      padding: 24px 22px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .font_d {
+      font-size: 3.5rem;
+    }
+
+    .glass-box {
+      width: 90%;
+      padding: 20px 18px;
+    }
+
+    .image-grid img {
+      width: 180px;
+    }
+  }
+
+  @media (max-width: 496px) {
+    .skills-container {
+      justify-content: flex-start;
+    }
+
+    .image-grid img {
+      width: 140px;
+    }
+  }
+
+
+  .proj-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .proj-card {
+    position: relative;
+    width: 250px;
+    height: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #1e1e1e;
+  }
+
+  .proj-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(20px);
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+
+  .proj-card:hover img {
+    filter: blur(0);
+    transform: scale(1.05);
+  }
+
+  .proj-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px 12px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    transform: translateY(40px);
+    opacity: 0;
+  }
+
+  .proj-card:hover .proj-info {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .proj-title {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .proj-desc {
+    margin: 0;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 450;
+  }
+
+  .project-heading {
+    font-size: 3.4rem;
+    padding-top: 18px;
+    padding-bottom: 5px;
+  }
+
+  .highlight-box {
+    flex: 1;
+    min-width: 180px;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .highlight-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: rgba(234, 223, 205, 0.65);
+  }
+
+  .highlight-text {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .experience-section {
+    width: 75%;
+    margin: 20px auto 40px auto;
+    padding: 30px;
+    border-radius: 25px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+    margin-top: 45px;
+  }
+
+  .experience-card {
+    padding: 30px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .experience-card h3 {
+    margin: 20px 0px 10px 0px;
+    font-size: 1.05rem;
+  }
+
+  .experience-card p {
+    margin: 0;
+    color: rgba(234, 223, 205, 0.842);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 450;
+  }
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(35px) scale(0.98);
+      filter: blur(6px);
+    }
+
+    60% {
+      opacity: 0.6;
+      transform: translateY(10px) scale(1.02);
+      filter: blur(2px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  .animate-on-load {
+    opacity: 0;
+    transform: translateY(35px);
+    animation: fadeUp 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    will-change: transform, opacity, filter;
+
+  }
+
+
+  .intro-text {
+    opacity: 0;
+  }
+  .justify-c{
+    display: flex;
+    justify-content: center;
+  }
+
+  .about-subtitle{
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer {
+    width: 75%;
+    margin: 0 auto 15px auto;
+
+    backdrop-filter: blur(6px);
+
+    border-radius: 10px;
+    padding: 6px 0;
+    text-align: center;
+    font-family: "Space Grotesk", sans-serif;
+    color: #e6ddc4;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .txt-dec {
+    text-decoration: none;
+    color: #e6ddc4;
+    font-size: 0.8rem;
+    margin-left: 3%;
+
+
+  }
+</style>
+
+
+
+<div class="extra text-center">
+  <h1 id="intro-heading" class="font_d animate-on-load">DAUD</h1>
+
+  <div>
+    <p id="intro-text" class="paragraphs animate-on-load">
+      Hey, thats my name. <br>I'm a Full-stack web developer. I build websites, experiment with projects <br> and I turn caffeine into code. (slightly fun) 
+
+  </div>
+  <div class="glass-box animate-on-load">
+    <h4>Skills and technologies</h4>
+    <div class="skills-container">
+      <span class="skill">Python</span>
+      <span class="skill">Django</span>
+      <span class="skill">JavaScript</span>
+      <span class="skill">HTML & CSS</span>
+      <span class="skill">Tailwind</span>
+      <span class="skill">Git</span>
+      <span class="skill">Bootstrap</span>
+      <span class="skill">GitHub</span>
+    </div>
+  </div>
+
+  <h2 class="font_d_for_h2 project-heading animate-on-load">My Projects</h2>
+  <div class="proj-container">
+
+    <div class="proj-card animate-on-load">
+      <a href="project3/"><img src="{% static 'img/BlogProject1.png' %}"></a>
+      <div class="proj-info">
+        <h3 class="proj-title">Blog Platform</h3>
+        <p class="proj-desc">A full-stack blog application built with Django, including CRUD and authentication.</p>
+      </div>
+    </div>
+    <div class="proj-card animate-on-load">
+      <a href="{% url 'project2' %}"><img src="{% static 'img/Connect Four Project.png' %}"></a>
+      <div class="proj-info">
+        <h3 class="proj-title">Connect Four Game</h3>
+        <p class="proj-desc">A browser-based Connect Four game using JavaScript, HTML, CSS and some BOOTSTRAP.</p>
+      </div>
+    </div>
+
+    <div class="proj-card animate-on-load">
+      <a href="{% url 'project1' %}"><img src="{% static 'img/Coffee Project.png' %}"></a>
+      <div class="proj-info">
+        <h3 class="proj-title">Coffee Project</h3>
+        <p class="proj-desc">A stylish coffee shop website built with Django.</p>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<section class="experience-section animate-on-load">
+  <h2 class="font_d_for_h2 justify-c">Experience Snapshot</h2>
+  <p class="about-subtitle">No formal experience yet, but my personal projects are treated like production-level work.</p>
+  <div class="experience-grid">
+    <div class="experience-card">
+      <h3>Solo Projects</h3>
+      <p>Own the entire lifecycle from idea to launch so I learn architecture choices, testing, and deployment the
+        hands-on way.</p>
+    </div>
+    <div class="experience-card">
+      <h3>Community Challenges</h3>
+      <p>Join online hackathons and coding prompts to simulate deadlines, collaborate, and collect feedback.</p>
+    </div>
+    <div class="experience-card">
+      <h3>Continuous Learning</h3>
+      <p>Ship mini experiments weely to practice new libraries, refine UI, and stay comfortable picking up unfamiliar
+        tech fast.</p>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}

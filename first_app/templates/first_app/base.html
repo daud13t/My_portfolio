@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daud - Portfolio</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico'%}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+  <!--FONTS-->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Zen+Dots&family=Space+Grotesk:wght@400;500;700&display=swap"
+    as="style">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Zen+Dots&family=Space+Grotesk:wght@400;500;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, #000000 0%, #121216 90%, #272727 100%);
+    color: rgba(234, 223, 205, 1);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .extra {
+    padding: 4px 25px;
+    font-size: 1rem;
+
+  }
+
+  .footer {
+    width: 75%;
+    margin: 0 auto 15px auto;
+
+    backdrop-filter: blur(6px);
+
+    border-radius: 10px;
+    padding: 6px 0;
+    text-align: center;
+    font-family: "Space Grotesk", sans-serif;
+    color: #e6ddc4;
+    font-size: 0.8rem;
+
+    transition: all 0.3s ease;
+  }
+
+  .txt-dec {
+    text-decoration: none;
+    color: #e6ddc4;
+    font-size: 0.8rem;
+    margin-left: 3%;
+
+
+  }
+
+
+  .extraaa {
+    padding: 4px;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+  }
+
+  .extraaa:hover {
+    transform: scale(1.3);
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 15px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+
+  .navbar-toggler-icon {
+    background-image: linear-gradient(to bottom,
+        rgba(20, 12, 6, 1) 33%,
+        transparent 33%,
+        transparent 66%,
+        rgba(20, 12, 6, 1) 66%);
+    width: 20px !important;
+    height: 16px !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border-radius: 2px;
+  }
+
+  .navbar-toggler {
+    padding: 2px 6px !important;
+    border: none !important;
+    outline: none !important;
+    scale: 0.8;
+  }
+
+  .navbar {
+    background-color: rgba(234, 223, 205, 1) !important;
+    border-radius: 30px !important;
+    color: rgba(20, 12, 6, 1) !important;
+  }
+
+  .nav-link,
+  .navbar-brand {
+    color: #140c06 !important;
+  }
+
+  .nav-link {
+    font-size: 0.9rem !important;
+  }
+
+  .nav-icon {
+    color: #140c06;
+    font-size: 1.2rem;
+  }
+</style>
+
+
+<body>
+
+  <div class="container mt-3">
+    <nav
+      class="navbar navbar-light navbar-expand-lg bg-transparent shadow-sm rounded-3 px-3 py-2 mx-auto animate-on-load"
+      style="max-width: 99%;">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'img/favicon_nobg.png' %}" alt="Home"
+          style="height: 40px; width: auto; border-radius: 50%;">
+      </a>
+
+      <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav ms-auto text-center">
+          <li class="nav-item"><a class="nav-link fs-5 px-2" href="{% url 'contact' %}">contact</a></li>
+          <li class="nav-item"><a class="nav-link fs-5 px-2" href="{% url 'about1' %}">about</a></li>
+          <li class="nav-item"><a class="nav-link fs-5 px-2" href="https://github.com/daud13t"><i
+                class="bi bi-github nav-icon"></i></a></li>
+          <li class="nav-item"><a class="nav-link fs-5 px-2" href="https://www.linkedin.com/in/daud-altaf-71b20a39b"><i
+                class="bi bi-linkedin nav-icon"></i></a></li>
+
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+
+  <div class='container'>
+    {% block content %}
+
+    {% endblock content %}
+
+    <footer class="footer animate-on-load">
+      <p>© 2025 Daud <a class="txt-dec" href="{% url 'contact' %}">contact</a> <a class="txt-dec"
+          href="{% url 'about1' %}">about</a></p>
+    </footer>
+    <script>
+      document.addEventListener("load", () => {
+        const elements = document.querySelectorAll(".animate-on-load");
+        elements.forEach((el, i) => {
+          el.style.animationDelay = `${i * 0.1}s`;
+        });
+      });
+    </script>
+  </div>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

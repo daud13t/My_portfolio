@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Coffee Shop</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    body {
+      background: radial-gradient(circle at center, #4e342e 0%, #3e2723 40%, #25161b 100%);
+      color: #f5f5f5;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .background-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+    }
+
+    .shape-1 {
+      top: -10%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: #ffcc80;
+    }
+
+    .shape-2 {
+      bottom: -10%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: #8d6e63;
+    }
+
+    /* Navbar / Back Link */
+    .nav-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: #ffcc80;
+      font-weight: 500;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 8px 16px;
+      border-radius: 30px;
+      backdrop-filter: blur(5px);
+    }
+
+    .back-link:hover {
+      color: #fff;
+      background: rgba(255, 204, 128, 0.2);
+      transform: translateX(-5px);
+    }
+
+    /* Main Card */
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      animation: fadeInUp 0.8s ease-out forwards;
+      text-align: center;
+    }
+
+    .login-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #ffcc80;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .login-header p {
+      color: rgba(245, 245, 245, 0.7);
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+    }
+
+    /* Form Styles */
+    .form-group {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      color: #ffcc80;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: #fff;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      background: rgba(0, 0, 0, 0.3);
+      border-color: #ffcc80;
+      box-shadow: 0 0 0 4px rgba(255, 204, 128, 0.1);
+      outline: none;
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: rgba(245, 245, 245, 0.8);
+      cursor: pointer;
+    }
+
+    .checkbox input {
+      accent-color: #ffcc80;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      width: 100%;
+      margin-top: 30px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #ffcc80, #ffb74d);
+      color: #3e2723;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(255, 183, 77, 0.3);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* Responsiveness */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 30px 20px;
+      }
+
+      .login-header h1 {
+        font-size: 2rem;
+      }
+
+      .nav-container {
+        top: 15px;
+        left: 15px;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background Ambience -->
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+  </div>
+
+  <div class="nav-container">
+    <a href="{% url 'project1' %}" class="back-link">
+      <span>&#8592;</span> Back to Home
+    </a>
+  </div>
+
+  <div class="login-container">
+    <div class="login-header">
+      <h1>Welcome Back</h1>
+      <p>Please sign in to continue your coffee journey</p>
+    </div>
+
+    <form action="" method="POST">
+      {% csrf_token %}
+      <!-- Added CSRF token for good measure, though user didn't ask, good practice if this form were real -->
+
+      <div class="form-group">
+        <label for="userEM">Email Address</label>
+        <input type="email" class="form-control" id="userEM" name="userEM" placeholder="name@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="userPW">Password</label>
+        <input type="password" class="form-control" id="userPW" name="userPW" placeholder="••••••••" required>
+      </div>
+
+      <label class="checkbox">
+        <input type="checkbox" name="userCheck">
+        Remember me
+      </label>
+
+      <button type="submit" class="btn-submit" name="button">Sign In</button>
+    </form>
+  </div>
+
+</body>
+
+</html>

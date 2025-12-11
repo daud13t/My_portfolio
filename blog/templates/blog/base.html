@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Blog</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+      body {
+        background: #93b5d6;
+        color: #1a1a1a;
+        font-family: "Poppins", sans-serif;
+        font-size: 1.05rem;
+        letter-spacing: 0.3px;
+        margin: 0;
+        padding: 0;
+      }
+
+     
+      .navbar {
+        background: #111420 !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1rem 0;
+        transition: all 0.3s ease;
+      }
+
+      .navbar .navbar-brand {
+        font-weight: 600;
+        font-size: 1.6rem;
+        color: #bbbbbb !important;
+        letter-spacing: 0.5px;
+      }
+
+      .navbar .nav-link {
+        color: #818181 !important;
+        font-weight: 500;
+        margin-left: 1.2rem;
+        transition: color 0.2s ease;
+      }
+
+      .navbar .nav-link:hover {
+        color: #979797 !important;
+      }
+      .blog_posts {
+        background: #f1f6ff;
+        border-radius: 14px;
+        padding: 2rem 2.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .blog_posts:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      .post a {
+        color: #111 !important;
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.2s ease;
+      }
+
+      .post a:hover {
+        opacity: 0.7;
+      }
+
+      button.nav-link {
+        background: none;
+        border: none;
+        padding: 0;
+        color: #444;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+      }
+
+      button.nav-link:hover {
+        opacity: 0.7;
+      }
+
+
+      .navbar .nav-link.disabled strong {
+        color: #b4b4b4;
+      }
+
+.navbar-toggler {
+    background-color: white !important;
+    border-color: #ccc !important;
+}
+
+      .container {
+        max-width: 900px;
+      }
+
+      .mt-5 {
+        margin-top: 3.5rem !important;
+      }
+
+      @media (max-width: 768px) {
+        .navbar .nav-link {
+          margin-left: 0;
+          margin-top: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg shadow-sm fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Portfolio</a>
+        <a class="navbar-brand" href="{% url 'post_list' %}">Blog</a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav align-items-center">
+
+
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'post_new' %}">New Post</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'post_draft_list' %}">Drafts</a></li>
+            <li class="nav-item">
+              <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="nav-link">Log Out</button>
+              </form>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link disabled">Hi, <strong>{{ user.username }}</strong></span>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'signup' %}">Sign up</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
+      <div class="blog_posts">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>
