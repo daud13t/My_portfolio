@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.core.mail import send_mail
 from django.conf import settings
@@ -26,6 +26,9 @@ class project2(generic.TemplateView):
 
 class sign_in_for_project1(generic.TemplateView):
       template_name = "project1/sign_in.html"
+
+      def post(self, request, *args, **kwargs):
+            return redirect('project1')
 
 
 
