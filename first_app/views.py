@@ -39,7 +39,6 @@ def contact_view(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            print("Form is valid!")  # Debug
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
             message = form.cleaned_data["message"]
@@ -48,9 +47,8 @@ def contact_view(request):
                 print("Sending email via Resend...")
                 key = settings.RESEND_API_KEY
                 if not key:
-                    raise Exception("RESEND_API_KEY is not set.")
+                    raise Exception("RESEND error.")
                 
-                # Sanitize the key: remove whitespace and 'Bearer ' if present
                 key = key.strip()
                 if key.lower().startswith("bearer "):
                     key = key[7:].strip()

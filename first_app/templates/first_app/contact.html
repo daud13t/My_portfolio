@@ -100,7 +100,6 @@
     transform: translateY(1px);
   }
 
-  /* Success/Error Messages */
   .success-msg {
     color: #8affaa;
     text-align: center;
@@ -135,7 +134,6 @@
 
   <form method="post">
     {% csrf_token %}
-    <!-- Django renders p tags with label and input, we style them via CSS above -->
     {{ form.as_p }}
 
     <div style="text-align:center;margin-top:10px;">
